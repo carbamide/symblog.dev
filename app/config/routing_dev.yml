@@ -1,7 +1,3 @@
-_welcome:
-    pattern:  /
-    defaults: { _controller: AcmeDemoBundle:Welcome:index }
-
 _demo_secured:
     resource: "@AcmeDemoBundle/Controller/SecuredController.php"
     type:     annotation
@@ -25,3 +21,9 @@ _configurator:
 
 _main:
     resource: routing.yml
+
+BloggerBlogBundle_homepage:
+    pattern:  /
+    defaults: { _controller: BloggerBlogBundle:Page:index }
+    requirements:
+        _method:  GET
