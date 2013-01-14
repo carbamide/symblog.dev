@@ -3,6 +3,8 @@
 namespace Blogger\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
 * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Entity\CommentRepository")
@@ -65,151 +67,161 @@ class Comment
 		$this->setUpdated(new \DateTime());
 	}
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	* Get id
+	*
+	* @return integer 
+	*/
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * Set user
-     *
-     * @param string $user
-     * @return Comment
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
+	/**
+	* Set user
+	*
+	* @param string $user
+	* @return Comment
+	*/
+	public function setUser($user)
+	{
+		$this->user = $user;
     
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get user
-     *
-     * @return string 
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
+	/**
+	* Get user
+	*
+	* @return string 
+	*/
+	public function getUser()
+	{
+		return $this->user;
+	}
 
-    /**
-     * Set comment
-     *
-     * @param string $comment
-     * @return Comment
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
+	/**
+	* Set comment
+	*
+	* @param string $comment
+	* @return Comment
+	*/
+	public function setComment($comment)
+	{
+		$this->comment = $comment;
     
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get comment
-     *
-     * @return string 
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
+	/**
+	* Get comment
+	*
+	* @return string 
+	*/
+	public function getComment()
+	{
+		return $this->comment;
+	}
 
-    /**
-     * Set approved
-     *
-     * @param boolean $approved
-     * @return Comment
-     */
-    public function setApproved($approved)
-    {
-        $this->approved = $approved;
+	/**
+	* Set approved
+	*
+	* @param boolean $approved
+	* @return Comment
+	*/
+	public function setApproved($approved)
+	{
+		$this->approved = $approved;
     
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get approved
-     *
-     * @return boolean 
-     */
-    public function getApproved()
-    {
-        return $this->approved;
-    }
+	/**
+	* Get approved
+	*
+	* @return boolean 
+	*/
+	public function getApproved()
+	{
+		return $this->approved;
+	}
 
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Comment
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
+	/**
+	* Set created
+	*
+	* @param \DateTime $created
+	* @return Comment
+	*/
+	public function setCreated($created)
+	{
+		$this->created = $created;
     
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get created
-     *
-     * @return \DateTime 
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
+	/**
+	* Get created
+	*
+	* @return \DateTime 
+	*/
+	public function getCreated()
+	{
+		return $this->created;
+	}
 
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Comment
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
+	/**
+	* Set updated
+	*
+	* @param \DateTime $updated
+	* @return Comment
+	*/
+	public function setUpdated($updated)
+	{
+		$this->updated = $updated;
     
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get updated
-     *
-     * @return \DateTime 
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
+	/**
+	* Get updated
+	*
+	* @return \DateTime 
+	*/
+	public function getUpdated()
+	{
+		return $this->updated;
+	}
 
-    /**
-     * Set blog
-     *
-     * @param \Blogger\BlogBundle\Entity\Blog $blog
-     * @return Comment
-     */
-    public function setBlog(\Blogger\BlogBundle\Entity\Blog $blog = null)
-    {
-        $this->blog = $blog;
+	/**
+	* Set blog
+	*
+	* @param \Blogger\BlogBundle\Entity\Blog $blog
+	* @return Comment
+	*/
+	public function setBlog(\Blogger\BlogBundle\Entity\Blog $blog = null)
+	{
+		$this->blog = $blog;
     
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get blog
-     *
-     * @return \Blogger\BlogBundle\Entity\Blog 
-     */
-    public function getBlog()
-    {
-        return $this->blog;
-    }
+	/**
+	* Get blog
+	*
+	* @return \Blogger\BlogBundle\Entity\Blog 
+	*/
+	public function getBlog()
+	{
+		return $this->blog;
+	}
+	
+	public static function loadValidatorMetadata(ClassMetaData $metadata)
+	{
+		$metadata->addPropertyConstraint('user', new NotBlank(array(
+		'message' => 'You must enter your name, dawg!'
+		)));
+		$metadata->addPropertyConstraint('comment', new NotBlank(array(
+		'message' => 'You must enter a comment, stoopid!'
+		)));
+	}
 }

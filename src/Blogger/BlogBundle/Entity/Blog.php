@@ -59,6 +59,11 @@ class Blog
     */
     protected $updated;
     
+	/**
+	* @ORM\Column(type="string")
+	*/
+	protected $slug;
+	
     /**
      * Get id
      *
@@ -79,7 +84,7 @@ class Blog
     {
         $this->title = $title;
     
-        return $this;
+		$this->setSlug($this->title);
     }
 
     /**
@@ -283,4 +288,51 @@ class Blog
     {
         return $this->comments;
     }
+	
+	public function __toString()
+	{
+		return $this->getTitle();
+	}
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Blog
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $this->slugify($slug);
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+	
+	public function slugify($text)
+	{
+	    $text = preg_replace('#[^\\pL\d]+#u', '-', $text);
+
+	    $text = trim($text, '-');
+
+	    if (function_exists('iconv')) {
+	        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+	    }
+
+	    $text = strtolower($text);
+
+	    $text = preg_replace('#[^-\w]+#', '', $text);
+
+	    if (empty($text)) {
+	        return 'n-a';
+	    }
+
+	    return $text;
+	}
 }
