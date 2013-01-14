@@ -29,7 +29,15 @@ class PageController extends Controller
 			$form->bindRequest($request);
 			
 			if ($form->isValid()) {
-				//Do stuff!
+				$message = \Swift_message::newInstance()
+				->setSubject('Contact enquiry from symblog')
+				->setFrom('support@jukaela.com')
+				->setTo($this->container->getParameter('blogger_blog.emails.contact_email'))
+				->setBody($this->renderView('BloggerBlogBundle:Page:contactEmail.txt.twig', array('enquiry' => $enquiry)));
+				
+				$this->get('mailer')->send($message);
+				
+				$this->get('session')->setFlash('blogger-notice', 'Your contact enquiry was successfully sent.  Thank you!');
 				
 				return $this->redirect($this->generateUrl('BloggerBlogBundle_contact'));
 			}
