@@ -26,9 +26,9 @@ twig:
 
 # Assetic Configuration
 assetic:
+    write_to: %kernel.root_dir%/../web 
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
